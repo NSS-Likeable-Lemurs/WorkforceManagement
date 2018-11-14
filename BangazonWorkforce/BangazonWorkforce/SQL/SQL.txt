@@ -1,4 +1,4 @@
-DELETE FROM OrderProduct;
+﻿DELETE FROM OrderProduct;
 DELETE FROM ComputerEmployee;
 DELETE FROM EmployeeTraining;
 DELETE FROM Employee;
@@ -52,9 +52,7 @@ CREATE TABLE Employee (
 	LastName VARCHAR(55) NOT NULL,
 	DepartmentId INTEGER NOT NULL,
 	IsSuperVisor BIT NOT NULL DEFAULT(0),
-	ComputerId INTEGER NOT NULL DEFAULT (0),
-    CONSTRAINT FK_EmployeeDepartment FOREIGN KEY(DepartmentId) REFERENCES Department(Id),
-	CONSTRAINT FK_ComputerEmployee FOREIGN KEY(ComputerId) REFERENCES ComputerEmployee(ComputerId)
+    CONSTRAINT FK_EmployeeDepartment FOREIGN KEY(DepartmentId) REFERENCES Department(Id)
 );
 
 CREATE TABLE Computer (

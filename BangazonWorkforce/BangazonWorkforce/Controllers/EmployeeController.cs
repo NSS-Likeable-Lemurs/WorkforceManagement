@@ -64,6 +64,36 @@ namespace BangazonWorkforce.Controllers
             {
                 return NotFound();
             }
+            string sql = @"SELECT e.Id, 
+                                      e.FirstName,
+                                      e.LastName, 
+                                      e.IsSupervisor,
+                                      e.DepartmentId,
+                                      d.Id,
+                                      d.Name,
+                                      d.Budget,
+                                      c.Id,
+                                      c.PurchaseDate,
+                                      c.DecomissionDate,
+                                      c.Make,
+                                      c.Manufacturer,
+                                      tp.Id,
+                                      tp.Name,
+                                      tp.StartDate,
+                                      tp.EndDate,
+                                      tp.MaxAttendees
+                                 FROM Employee e 
+                                    JOIN Department d on e.DepartmentId = d.Id
+                                    JOIN ComputerEmployee on ComputerEmployee.ComputerId = Employee.Id
+                                    JOIN EmployeeTraining on EmployeeTraining.TrainingProgramId = Employee.Id
+                             ORDER BY e.Id";
+            IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Employee>(
+                sql,
+                (employee, department) => {
+                    employee.Department = department;
+                    return employee;
+                });
+
             return View(employee);
         }
 

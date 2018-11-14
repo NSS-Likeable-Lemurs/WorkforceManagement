@@ -31,7 +31,7 @@ namespace BangazonWorkforce.Controllers
         {
             using (IDbConnection conn = Connection)
             {
-                string sql = $@"SELECT  d.Name DepartmentName,d.Budget Budget,COUNT(e.DepartmentId) Total FROM Employee e JOIN Department d on e.DepartmentId = d.Id GROUP BY d.Name, d.Budget;";               
+                string sql = $@"SELECT  d.Name, d.Budget, COUNT(e.DepartmentId) TotalEmployees FROM Department d JOIN Employee e on d.Id = e.DepartmentId GROUP BY d.Name, d.Budget;";               
                     IEnumerable<Department> departments = await conn.QueryAsync<Department>(sql);
 
                 return View(departments);

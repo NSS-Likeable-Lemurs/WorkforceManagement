@@ -158,7 +158,6 @@ namespace BangazonWorkforce.Controllers
                 string sql = $@"UPDATE Employee 
                                    SET FirstName = '{employee.FirstName}', 
                                        LastName = '{employee.LastName}', 
-                                       IsSupervisor = {(employee.IsSupervisor ? 1 : 0)},
                                        DepartmentId = {employee.DepartmentId}
                                  WHERE id = {id}";
 

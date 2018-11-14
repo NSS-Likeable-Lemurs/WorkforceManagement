@@ -244,43 +244,43 @@ VALUES
 ('Shipping', 500000);
 
 INSERT INTO TrainingProgram
-(StartDate,EndDate,MaxAttendees)
+(Name,StartDate,EndDate,MaxAttendees)
 Values
-('12-15-2018','12-20-2018', 25);
+('TP1','12-15-2018','12-20-2018', 25);
 
 INSERT INTO TrainingProgram
-(StartDate,EndDate,MaxAttendees)
+(Name,StartDate,EndDate,MaxAttendees)
 Values
-('09-15-2018','09-20-2018', 25);
+('TP2','09-15-2018','09-20-2018', 25);
 
 INSERT INTO TrainingProgram
-(StartDate,EndDate,MaxAttendees)
+(Name,StartDate,EndDate,MaxAttendees)
 Values
-('11-15-2018','11-20-2018', 25);
+('TP3','11-15-2018','11-20-2018', 25);
 
 INSERT INTO TrainingProgram
-(StartDate,EndDate,MaxAttendees)
+(Name,StartDate,EndDate,MaxAttendees)
 Values
-('1-15-2019','1-20-2019', 25);
+('TP4','1-15-2019','1-20-2019', 25);
 
 INSERT INTO Computer
-	(PurchaseDate, DecomissionDate)
-	VALUES ('2018-06-12 10:34:09 PM', NULL)
+    (PurchaseDate, DecomissionDate, Make, Manufacturer)
+    VALUES ('2018-06-12 10:34:09 PM', NULL, 'Mac', 'Apple')
 ;
 
 INSERT INTO Computer
-	(PurchaseDate, DecomissionDate)
-	VALUES ('2018-09-30 10:34:09 PM', NULL)
+    (PurchaseDate, DecomissionDate, Make, Manufacturer)
+    VALUES ('2018-09-30 10:34:09 PM', NULL, 'Mac', 'Apple')
 ;
 
 INSERT INTO Computer
-	(PurchaseDate, DecomissionDate)
-	VALUES ('2016-2-23 10:34:09 PM', '2018-12-3 12:42:09 PM')
+    (PurchaseDate, DecomissionDate, Make, Manufacturer)
+    VALUES ('2016-2-23 10:34:09 PM', '2018-12-3 12:42:09 PM', 'Mac', 'Apple')
 ;
 
 INSERT INTO Computer
-	(PurchaseDate, DecomissionDate)
-	VALUES ('2015-12-2 10:34:09 PM', '2017-3-23 09:03:09 PM')
+    (PurchaseDate, DecomissionDate, Make, Manufacturer)
+    VALUES ('2015-12-2 10:34:09 PM', '2017-3-23 09:03:09 PM', 'Mac', 'Apple')
 ;
 
 INSERT INTO Employee 

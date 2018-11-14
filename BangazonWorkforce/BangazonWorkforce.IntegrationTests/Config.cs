@@ -6,7 +6,7 @@
         {
             get
             {
-                return "__PLACE CONNECTION STRING HERE__";
+                return "Server=LAPTOP-H6HB3A85\\SQLEXPRESS;Initial Catalog=BangazonAPI;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             }
         }
     }

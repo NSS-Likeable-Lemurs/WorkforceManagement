@@ -97,7 +97,10 @@ namespace BangazonWorkforce.Controllers
             using (IDbConnection conn = Connection)
             {
                 string sql = $@"INSERT INTO Employee (
-                                    FirstName, LastName, IsSupervisor, DepartmentId
+                                    FirstName, 
+                                    LastName, 
+                                    IsSupervisor, 
+                                    DepartmentId
                                 ) VALUES (
                                     '{employee.FirstName}', '{employee.LastName}',
                                     {(employee.IsSupervisor ? 1 : 0)}, {employee.DepartmentId}

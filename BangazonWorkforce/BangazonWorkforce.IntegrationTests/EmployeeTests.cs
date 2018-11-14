@@ -44,9 +44,9 @@ namespace BangazonWorkforce.IntegrationTests
 
             IHtmlDocument indexPage = await HtmlHelpers.GetDocumentAsync(response);
             IHtmlCollection<IElement> tds = indexPage.QuerySelectorAll("td");
-            Assert.Contains(tds, td => td.TextContent.Trim() == "Priyankaa");
-            Assert.Contains(tds, td => td.TextContent.Trim() == "Garg");
-            Assert.Contains(tds, td => td.TextContent.Trim() == "IT");
+            Assert.Contains(tds, td => td.TextContent.Trim() == "FirstName1");
+            Assert.Contains(tds, td => td.TextContent.Trim() == "LastName1");
+            Assert.Contains(tds, td => td.TextContent.Trim() == "Accounting");
 
 
         }

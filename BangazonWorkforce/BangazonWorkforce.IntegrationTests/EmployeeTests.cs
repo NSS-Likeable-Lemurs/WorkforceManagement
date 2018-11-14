@@ -25,6 +25,8 @@ namespace BangazonWorkforce.IntegrationTests
             _client = factory.CreateClient();
         }
 
+        // Integration Testing for displaying List of employees with department.
+
         [Fact]
         public async Task Get_IndexReturnsSuccessAndCorrectContentType()
         {

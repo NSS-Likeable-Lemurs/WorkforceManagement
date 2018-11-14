@@ -27,6 +27,9 @@ namespace BangazonWorkforce.Controllers
             _config = config;
         }
 
+
+        // Get: List of Employees
+
         public async Task<IActionResult> Index()
         {
             using (IDbConnection conn = Connection)

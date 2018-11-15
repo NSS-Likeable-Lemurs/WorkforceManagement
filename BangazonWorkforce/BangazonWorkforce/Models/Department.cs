@@ -1,5 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+//Author: Helen Chalmers
+// Purpose: A Model for the Department Database
+//
+//
 namespace BangazonWorkforce.Models
 {
 

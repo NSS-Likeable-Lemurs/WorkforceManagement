@@ -10,6 +10,21 @@ using System.Data;
 using BangazonWorkforce.Models;
 
 namespace BangazonWorkforce.Controllers
+
+/**
+* Class: DepartmentController
+* Purpose: Define all methods that interract with the Department table in the database, and routes to create
+        routes to create new users.
+* Author: Helen Chalmers and Team 
+* Methods:
+*   DepartmentController(BangazonDeltaContext) - Constructor that gives access to models on creation
+*   Create() - returns the Department/Create.cshtml view
+*   Create(Department department) - Method called upon the submit button on the new Department form, to create and add a new Department
+                    to the database.
+        Department department - the properties of the department collected through the form that is added to the database
+Get() - Returns all Departments from the Department table in the database.
+
+*/
 {
     public class DepartmentController : Controller
     {
@@ -26,7 +41,9 @@ namespace BangazonWorkforce.Controllers
         {
             _config = config;
         }
-
+        /* Purpose: Get() - Returns all Departments from the Department table in the database.  
+         * Author: Helen Chalmers
+         */
         public async Task<IActionResult> Index()
         {
             using (IDbConnection conn = Connection)
@@ -62,7 +79,8 @@ namespace BangazonWorkforce.Controllers
             return View();
         }
 
-        // POST: Department/Create
+        //  Purpose: POST: Department/Create
+        //   Author: Helen Chalmers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -85,6 +103,7 @@ namespace BangazonWorkforce.Controllers
         }
 
         // GET: Department/Edit/5
+        // Author: Team
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -101,6 +120,7 @@ namespace BangazonWorkforce.Controllers
         }
 
         // POST: Department/Edit/5
+        // Author: Team
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -147,6 +167,7 @@ namespace BangazonWorkforce.Controllers
         }
 
         // POST: Department/Delete/5
+        // Author: Team 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

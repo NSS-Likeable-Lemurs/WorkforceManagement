@@ -16,12 +16,7 @@ using Dapper;
             list all employees with department name.
  * Author: Team-Likeable Lemurs
  * Methods:
- * EmployeeController(BangazonWorkForce) - Constructor that gives access to models on creation-
- * Index() - When the page loads user be able to see list of all employees and department name from the context  ",
- * Create() - When User clicks Create link on Employee Page then a page opens withblank form to creat new employee.",
- * EmployeeDetail([FromRoute]int id) - When a user on Employee page clicks on any Detail hyperlinked Employee then page load the detail of that Employee",
- * Edit() - When a user click the Edit Link on Employee page then a a page open with form to edit existing employee.
- * Delete() - When a user click the delete Link on Employee Page then a page open with message "Are you sure you want to delete this employee".
+ * EmployeeController(BangazonWorkForce) - Constructor that gives access to models on creation
  */
 namespace BangazonWorkforce.Controllers
 {
@@ -42,7 +37,13 @@ namespace BangazonWorkforce.Controllers
         }
 
 
-        // Get: List of Employees
+   /**
+       *Purpose: Define Index method that interract with the Employee table in the database, and routes to
+            list all employees with department name.
+       *Author: Priyanka Garg
+       *Methods: Index() - When the page loads user be able to see list of all employees and department name from the context  ",
+       */
+
 
         public async Task<IActionResult> Index()
         {
@@ -68,7 +69,12 @@ namespace BangazonWorkforce.Controllers
                 return View(employees);
             }
         }
-
+        /**
+       *Purpose: Define Detail method that interract with the Employee table to show detail of employee
+                 with department name.
+       *Author: Kelly Cook
+       *Method: EmployeeDetail([FromRoute]int id) - When a user on Employee page clicks on any Detail hyperlinked Employee then page load the detail of that Employee",
+    */
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -83,9 +89,12 @@ namespace BangazonWorkforce.Controllers
             }
             return View(employee);
         }
-
-        // GET: Employee/Create
-        public async Task<IActionResult> Create()
+      /**
+       *Purpose: Define Create method that Insert the data for Employee table in the database.
+       *Author: Streator ward
+       *Method: Create() - When User clicks Create link on Employee Page then a page opens with blank form to creat new employee.",
+    */
+          public async Task<IActionResult> Create()
         {
             List<Department> allDepartments = await GetAllDepartments();
             EmployeeAddEditViewModel viewmodel = new EmployeeAddEditViewModel
@@ -124,8 +133,12 @@ namespace BangazonWorkforce.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        /**
+            *Purpose: Define Edit method that interact with the Employee table in the database, and Edit the data for existing employee.
+            *Author: Aron Keen
+            *Method: Edit([FromRoute]int id) - When a user click the Edit Link on Employee page then a a page open with a form to edit existing employee.
+         */
 
-        // GET: Employee/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -183,9 +196,11 @@ namespace BangazonWorkforce.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-
-
-        // GET: Employee/Delete/5
+         /**
+            *Purpose: Define Delete method to delete the particular Employee in the database,
+            *Author: 
+            *Method: Delete([FromRoute]int id) - When a user click the delete Link on Employee Page then a page open with message "Are you sure you want to delete this employee".
+    */
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

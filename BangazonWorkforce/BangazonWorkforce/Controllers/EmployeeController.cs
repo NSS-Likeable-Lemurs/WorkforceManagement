@@ -9,6 +9,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Dapper;
 
+
+/**
+ * Class: EmployeeController
+ * Purpose: Define all methods that interract with the Employee table in the database, and routes to
+            list all employees with department name.
+ * Author: Team-Likeable Lemurs
+ * Methods:
+ * EmployeeController(BangazonWorkForce) - Constructor that gives access to models on creation-
+ * Index() - When the page loads user be able to see list of all employees and department name from the context  ",
+ * Create() - When User clicks Create link on Employee Page then a page opens withblank form to creat new employee.",
+ * EmployeeDetail([FromRoute]int id) - When a user on Employee page clicks on any Detail hyperlinked Employee then page load the detail of that Employee",
+ * Edit() - When a user click the Edit Link on Employee page then a a page open with form to edit existing employee.
+ * Delete() - When a user click the delete Link on Employee Page then a page open with message "Are you sure you want to delete this employee".
+ */
 namespace BangazonWorkforce.Controllers
 {
     public class EmployeeController : Controller

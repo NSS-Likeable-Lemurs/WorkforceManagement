@@ -38,13 +38,22 @@ namespace BangazonWorkforce.Controllers
                                       e.DepartmentId,
                                       d.Id,
                                       d.Name,
-                                      d.Budget
-                                 FROM Employee e JOIN Department d on e.DepartmentId = d.Id
+                                      d.Budget,
+                                      c.Id,
+                                      c.PurchaseDate,
+                                      c.DecomissionDate,
+                                      c.Make,
+                                      c.Manufacturer
+                                 FROM Employee e 
+                                 LEFT JOIN Department d on e.DepartmentId = d.Id
+                                 LEFT JOIN ComputerEmployee ce on e.Id = ce.EmployeeId
+                                 LEFT JOIN Computer c on ce.ComputerId = c.ID
                              ORDER BY e.Id";
-                IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Employee>(
+                IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Computer, Employee>(
                     sql,
-                    (employee, department) => {
+                    (employee, department, computer) => {
                         employee.Department = department;
+                        employee.Computer = computer;
                         return employee;
                     });
 

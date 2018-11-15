@@ -22,5 +22,35 @@ namespace BangazonWorkforce.Models
                         .ToList();
             }
         }
+        public List<Computer> AllComputers { get; set; }
+        public List<SelectListItem> AllComputerOptions
+        {
+            get
+            {
+                if (AllComputers == null)
+                {
+                    return null;
+                }
+
+                return AllComputers
+                        .Select((c) => new SelectListItem(c.Make, c.Id.ToString()))
+                        .ToList();
+            }
+        }
+        //public List<TrainingProgram> AllTrainingPrograms { get; set; }
+        //public List<SelectListItem> AllTrainingProgramOptions
+        //{
+        //    get
+        //    {
+        //        if (AllTrainingPrograms == null)
+        //        {
+        //            return null;
+        //        }
+
+        //        return AllTrainingPrograms
+        //                .Select((tp) => new SelectListItem(tp.Name, tp.Id.ToString()))
+        //                .ToList();
+        //    }
+        //}
     }
 }

@@ -8,7 +8,7 @@ using BangazonWorkforce.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Dapper;
-
+using BangazonWorkforce.Models.ViewModels;
 
 /**
  * Class: EmployeeController
@@ -87,7 +87,8 @@ namespace BangazonWorkforce.Controllers
             {
                 return NotFound();
             }
-            string sql = @"SELECT e.Id, 
+            string sql = @"SELECT 
+                                      e.Id, 
                                       e.FirstName,
                                       e.LastName, 
                                       e.IsSupervisor,

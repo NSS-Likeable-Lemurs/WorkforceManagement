@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+//Author: Helen Chalmers
+// Purpose: A Model for the Department Database
+//
+//
 namespace BangazonWorkforce.Models
 {
 
@@ -16,5 +20,7 @@ namespace BangazonWorkforce.Models
         public int Budget { get; set; }
         public List<Employee> Employees { get; set; } = new List<Employee>();
 
+
+        public int TotalEmployees { get; set; }
     }
 }

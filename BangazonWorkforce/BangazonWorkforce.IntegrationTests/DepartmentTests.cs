@@ -18,7 +18,8 @@ namespace BangazonWorkforce.IntegrationTests
         {
             _client = factory.CreateClient();
         }
-
+        // Author: Helen Chalmers
+        // Purpose: Integration Testing for getting the List of Departments with Number of Employees .
         [Fact]
         public async Task Get_IndexReturnsSuccessAndCorrectContentType()
         {
@@ -33,6 +34,8 @@ namespace BangazonWorkforce.IntegrationTests
             Assert.Equal("text/html; charset=utf-8",
                 response.Content.Headers.ContentType.ToString());
         }
+        //Author: Helen ChalmersC:\Users\hchal\workspace\CSHARP\WorkforceManagement\BangazonWorkforce\BangazonWorkforce\Controllers\DepartmentController.cs
+        //Purpose:  Integration Testing for posting a new department to the database.  
 
         [Fact]
         public async Task Post_CreateAddsDepartment()

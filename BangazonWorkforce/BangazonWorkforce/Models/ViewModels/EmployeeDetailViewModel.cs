@@ -1,11 +1,5 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Configuration;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,35 +7,18 @@ namespace BangazonWorkforce.Models.ViewModels
 {
     public class EmployeeDetailViewModel
     {
-        private readonly IConfiguration _config;
+        public int Id { get; set; }
 
-        public List<SelectListItem> TrainingProgram { get; set; }
-        public Employee employee { get; set; }
+        public string FirstName { get; set; }
 
-        public EmployeeDetailViewModel() { }
+        public string LastName { get; set; }
 
-        public EmployeeDetailViewModel(IConfiguration config)
-        {
+        public string DepartmentName { get; set; }
 
-            using (IDbConnection conn = new SqlConnection(config.GetConnectionString("DefaultConnection")))
-            {
-                TrainingProgram = conn.Query<TrainingProgram>(@"
-                    SELECT Id, Name FROM TrainingProgram;
-                ")
-                .AsEnumerable()
-                .Select(li => new SelectListItem
-                {
-                    Text = li.Name,
-                    Value = li.Id.ToString()
-                }).ToList();
-                ;
-            }
+        public string ComputerMake { get; set; }
 
-            TrainingProgram.Insert(0, new SelectListItem
-            {
-                Text = "Choose training program...",
-                Value = "0"
-            });
-        }
+        public string ComputerManufacturer { get; set; }
+
+        public List<TrainingProgram> TrainingPrograms = new List<TrainingProgram>();
     }
 }

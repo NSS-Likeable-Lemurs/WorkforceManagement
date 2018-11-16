@@ -5,10 +5,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BangazonWorkforce.Models;
+using BangazonWorkforce.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Dapper;
-using BangazonWorkforce.Models.ViewModels;
 
 /**
  * Class: EmployeeController
@@ -23,7 +23,7 @@ namespace BangazonWorkforce.Controllers
     public class EmployeeController : Controller
     {
         private IConfiguration _config;
-        private IDbConnection Connection
+        public IDbConnection Connection
         {
             get
             {
@@ -35,6 +35,7 @@ namespace BangazonWorkforce.Controllers
         {
             _config = config;
         }
+    
 
 
    /**
@@ -81,63 +82,67 @@ namespace BangazonWorkforce.Controllers
             {
                 return NotFound();
             }
-
-            Employee employee = await GetById(id.Value);
-            if (employee == null)
+            using (IDbConnection conn = Connection)
             {
-                return NotFound();
+
+                Employee employee = await GetById(id.Value);
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+                string sql = $@"SELECT 
+                                e.Id, 
+                                e.FirstName,
+                                e.LastName, 
+                                e.IsSupervisor,
+                                e.DepartmentId,
+                                d.Id,
+                                d.[Name],
+                                d.Budget,
+                                c.Id,
+                                c.PurchaseDate,
+                                c.DecomissionDate,
+                                c.Make,
+                                c.Manufacturer,
+                                tp.Id,
+                                tp.[Name],
+                                tp.StartDate,
+                                tp.EndDate,
+                                tp.MaxAttendees
+                                FROM Employee e 
+                                JOIN ComputerEmployee on ComputerEmployee.EmployeeId = e.Id
+                                JOIN Computer c on c.Id = ComputerEmployee.ComputerId
+                                LEFT JOIN EmployeeTraining on EmployeeTraining.EmployeeId = e.Id
+                                LEFT JOIN TrainingProgram tp on tp.Id = EmployeeTraining.TrainingProgramId
+                                LEFT JOIN Department d on d.Id = e.DepartmentId
+                                WHERE e.Id = {id}";
+
+                EmployeeDetailViewModel model = new EmployeeDetailViewModel();
+
+                IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Computer, TrainingProgram, Employee>(
+                    sql,
+                    (emp, department, computer, trainingProgram) =>
+                    {
+
+                        if (model.DepartmentName == null)
+                        {
+                            model.FirstName = emp.FirstName;
+                            model.LastName = emp.LastName;
+                            model.DepartmentName = department.Name;
+                            model.ComputerMake = computer.Make;
+                            model.ComputerManufacturer = computer.Manufacturer;
+                        }
+
+                        if (!model.TrainingPrograms.Contains(trainingProgram))
+                        {
+                            model.TrainingPrograms.Add(trainingProgram);
+                        }
+
+                        return employee;
+                    });
+
+                return View(model);
             }
-            string sql = @"SELECT 
-                                      e.Id, 
-                                      e.FirstName,
-                                      e.LastName, 
-                                      e.IsSupervisor,
-                                      e.DepartmentId,
-                                      d.Id,
-                                      d.[Name],
-                                      d.Budget,
-                                      c.Id,
-                                      c.PurchaseDate,
-                                      c.DecomissionDate,
-                                      c.Make,
-                                      c.Manufacturer,
-                                      tp.Id,
-                                      tp.[Name],
-                                      tp.StartDate,
-                                      tp.EndDate,
-                                      tp.MaxAttendees
-                                 FROM Employee e 
-                                    JOIN ComputerEmployee ce on ce.EmployeeId = e.Id
-                                    JOIN Computer c on c.Id = ce.ComputerId
-                                    LEFT JOIN EmployeeTraining et on et.EmployeeId = e.Id
-                                    LEFT JOIN TrainingProgram tp on tp.Id = et.TrainingProgramId
-                                    LEFT JOIN Department d on d.Id = e.DepartmentId
-                             ORDER BY e.Id";
-
-            EmployeeDetailViewModel model = new EmployeeDetailViewModel();
-
-            IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Computer, TrainingProgram, Employee>(
-                sql,
-                (employee, department, computer, trainingProgram) => {
-
-                    if (model.DepartmentName == null)
-                    {
-                        model.FirstName = employee.FirstName;
-                        model.LastName = employee.LastName;
-                        model.DepartmentName = department.Name;
-                        model.ComputerMake = computer.Make;
-                        model.ComputerManufacturer = computer.Manufacturer;
-                    }
-
-                    if (!model.TrainingPrograms.Contains(trainingProgram))
-                    {
-                        model.TrainingPrograms.Add(trainingProgram);
-                    }
-
-                    return employee;
-                });
-
-            return View(model);
         }
       /**
        *Purpose: Define Create method that Insert the data for Employee table in the database.

@@ -41,11 +41,14 @@
         <dd>
             @Html.DisplayFor(model => model.Department.Name)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ComputerId)
-        </dt>
+        <dt>Assigned Computer</dt>
         <dd>
-            @Html.DisplayFor(model => model.Computer.Make)
+            @Html.DisplayNameFor(model => model.ComputerManufacturer)
+            @Html.DisplayFor(model => model.ComputerMake)
+        </dd>
+        <dt>Training Programs</dt>
+        <dd>
+            
         </dd>
     </dl>
 </div>

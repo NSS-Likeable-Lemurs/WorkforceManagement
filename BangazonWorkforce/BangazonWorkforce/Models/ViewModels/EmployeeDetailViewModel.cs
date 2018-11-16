@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BangazonWorkforce.Models
+namespace BangazonWorkforce.Models.ViewModels
 {
     public class EmployeeDetailViewModel
     {
-        public Employee Employee { get; set; }
-        public List<Computer> AllComputers { get; set; }
-        public List<TrainingProgram> TrainingPrograms { get; set; }
+        public int Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string DepartmentName { get; set; }
+
+        public string ComputerMake { get; set; }
+
+        public string ComputerManufacturer { get; set; }
+
+        public List<TrainingProgram> TrainingPrograms = new List<TrainingProgram>();
     }
 }

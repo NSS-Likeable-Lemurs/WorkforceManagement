@@ -70,7 +70,7 @@ namespace BangazonWorkforce.Controllers
                                       e.IsSupervisor,
                                       e.DepartmentId,
                                       d.Id,
-                                      d.Name,
+                                      d.[Name],
                                       d.Budget,
                                       c.Id,
                                       c.PurchaseDate,
@@ -78,27 +78,42 @@ namespace BangazonWorkforce.Controllers
                                       c.Make,
                                       c.Manufacturer,
                                       tp.Id,
-                                      tp.Name,
+                                      tp.[Name],
                                       tp.StartDate,
                                       tp.EndDate,
                                       tp.MaxAttendees
                                  FROM Employee e 
-                                    JOIN ComputerEmployee on ComputerEmployee.EmployeeId = e.Id
-                                    JOIN Computer c on ComputerEmployee.ComputerId = c.Id
-                                    LEFT JOIN EmployeeTraining on EmployeeTraining.EmployeeId = e.Id
-                                    LEFT JOIN TrainingProgram tp on tp.Id = EmployeeTraining.TrainingProgramId
-                                    LEFT JOIN Department d on e.DepartmentId = d.Id
+                                    JOIN ComputerEmployee ce on ce.EmployeeId = e.Id
+                                    JOIN Computer c on c.Id = ce.ComputerId
+                                    LEFT JOIN EmployeeTraining et on et.EmployeeId = e.Id
+                                    LEFT JOIN TrainingProgram tp on tp.Id = et.TrainingProgramId
+                                    LEFT JOIN Department d on d.Id = e.DepartmentId
                              ORDER BY e.Id";
+
+            EmployeeDetailViewModel model = new EmployeeDetailViewModel();
+
             IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Computer, TrainingProgram, Employee>(
                 sql,
-                (employee, department, computer, trainingprogram) => {
-                    employee.Department = department;
-                    employee.Computer = computer;
-                    employee.TrainingProgram = trainingprogram;
+                (employee, department, computer, trainingProgram) => {
+
+                    if (model.DepartmentName == null)
+                    {
+                        model.FirstName = employee.FirstName;
+                        model.LastName = employee.LastName;
+                        model.DepartmentName = department.Name;
+                        model.ComputerMake = computer.Make;
+                        model.ComputerManufacturer = computer.Manufacturer;
+                    }
+
+                    if (!model.TrainingPrograms.Contains(trainingProgram))
+                    {
+                        model.TrainingPrograms.Add(trainingProgram);
+                    }
+
                     return employee;
                 });
 
-            return View(employee);
+            return View(model);
         }
 
         // GET: Employee/Create

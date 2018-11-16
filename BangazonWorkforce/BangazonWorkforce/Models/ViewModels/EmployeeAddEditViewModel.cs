@@ -22,17 +22,17 @@ namespace BangazonWorkforce.Models
                         .ToList();
             }
         }
-        public List<Computer> AllComputers { get; set; }
+        public List<Computer> AvailableComputers { get; set; }
         public List<SelectListItem> AllComputerOptions
         {
             get
             {
-                if (AllComputers == null)
+                if (AvailableComputers == null)
                 {
                     return null;
                 }
 
-                return AllComputers
+                return AvailableComputers
                         .Select((c) => new SelectListItem(c.Make, c.Id.ToString()))
                         .ToList();
             }

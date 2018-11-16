@@ -44,7 +44,14 @@ namespace BangazonWorkforce.Controllers
             {
                 return NotFound();
             }
-
+            string sql = $@"SELECT d.Id, 
+                             d.Name,                                       
+                           e.FirstName, 
+                           e.LastName,
+                           e.DepartmentId
+                         FROM Department d 
+                LEFT JOIN Employee e on d.Id = e.DepartmentId
+                    WHERE d.Id = {id}";
             Department department = await GetById(id.Value);
             if (department == null)
             {
@@ -52,6 +59,9 @@ namespace BangazonWorkforce.Controllers
             }
             return View(department);
         }
+
+
+
 
         // GET: Department/Create
         public IActionResult Create()

@@ -83,14 +83,18 @@ namespace BangazonWorkforce.Controllers
                                       tp.EndDate,
                                       tp.MaxAttendees
                                  FROM Employee e 
-                                    JOIN Department d on e.DepartmentId = d.Id
-                                    JOIN ComputerEmployee on ComputerEmployee.ComputerId = Employee.Id
-                                    JOIN EmployeeTraining on EmployeeTraining.TrainingProgramId = Employee.Id
+                                    JOIN ComputerEmployee on ComputerEmployee.EmployeeId = e.Id
+                                    JOIN Computer c on ComputerEmployee.ComputerId = c.Id
+                                    LEFT JOIN EmployeeTraining on EmployeeTraining.EmployeeId = e.Id
+                                    LEFT JOIN TrainingProgram tp on tp.Id = EmployeeTraining.TrainingProgramId
+                                    LEFT JOIN Department d on e.DepartmentId = d.Id
                              ORDER BY e.Id";
-            IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Employee>(
+            IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Computer, TrainingProgram, Employee>(
                 sql,
-                (employee, department) => {
+                (employee, department, computer, trainingprogram) => {
                     employee.Department = department;
+                    employee.Computer = computer;
+                    employee.TrainingProgram = trainingprogram;
                     return employee;
                 });
 

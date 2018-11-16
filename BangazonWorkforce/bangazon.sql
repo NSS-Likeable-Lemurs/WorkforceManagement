@@ -52,9 +52,7 @@ CREATE TABLE Employee (
 	LastName VARCHAR(55) NOT NULL,
 	DepartmentId INTEGER NOT NULL,
 	IsSuperVisor BIT NOT NULL DEFAULT(0),
-	ComputerId INTEGER NOT NULL DEFAULT (0),
-    CONSTRAINT FK_EmployeeDepartment FOREIGN KEY(DepartmentId) REFERENCES Department(Id),
-	CONSTRAINT FK_ComputerEmployee FOREIGN KEY(ComputerId) REFERENCES ComputerEmployee(ComputerId)
+    CONSTRAINT FK_EmployeeDepartment FOREIGN KEY(DepartmentId) REFERENCES Department(Id)
 );
 
 CREATE TABLE Computer (
@@ -140,67 +138,6 @@ CREATE TABLE OrderProduct (
     CONSTRAINT FK_OrderProduct_Order FOREIGN KEY(OrderId) REFERENCES [Order](Id)
 );
 
-INSERT INTO Customer 
-    (FirstName, LastName) 
-VALUES ('FirstName1', 'FirstName1')
-;
-
-INSERT INTO Customer
-    (FirstName, LastName)
-VALUES ('FirstName2', 'LastName2')
-;
-
-INSERT INTO Customer
-    (FirstName, LastName)
-VALUES ('FirstName3', 'LastName3')
-;
-
-INSERT INTO Customer
-    (FirstName, LastName)
-VALUES ('FirstName4', 'LastName4')
-;
-
-INSERT INTO ProductType
-    (Name)
-VALUES ('Book')
-;
-
-INSERT INTO ProductType
-    (Name)
-VALUES ('Clothing')
-;
-
-INSERT INTO ProductType
-    (Name)
-VALUES ('Kitchen Appliance')
-;
-
-INSERT INTO ProductType
-    (Name)
-VALUES ('Vehicle')
-;
-
-
-INSERT INTO Product
-    (ProductTypeId, CustomerId, Price, Title, Description, Quantity)
-VALUES (1, 2, 100, 'Harry Potter and the Chamber of Secrets', 'First Edition', 2)
-;
-
-INSERT INTO Product
-    (ProductTypeId, CustomerId, Price, Title, Description, Quantity)
-VALUES (2, 4, 250, 'Louie Vuitton Belt', 'Saucy', 4)
-;
-
-INSERT INTO Product
-    (ProductTypeId, CustomerId, Price, Title, Description, Quantity)
-VALUES (3, 1, 25, 'Knife', 'Sharp', 50)
-;
-
-INSERT INTO Product
-    (ProductTypeId, CustomerId, Price, Title, Description, Quantity)
-VALUES (4, 3, 7500, 'Corvette', 'Great Condition', 1)
-;
-
 INSERT INTO PaymentType
     (AcctNumber, Name, CustomerId)
 VALUES
@@ -226,157 +163,91 @@ VALUES
 ;
 
 INSERT INTO Department
-(Name,Budget)
+(Name, Budget)
 VALUES
 ('Accounting', 300000);
 
 INSERT INTO Department
-(Name,Budget)
+(Name, Budget)
 VALUES
 ('CustomerService', 250000);
 
 INSERT INTO Department
-(Name,Budget)
+(Name, Budget)
 VALUES
 ('Training', 125000);
 
 INSERT INTO Department
-(Name,Budget)
+(Name, Budget)
 VALUES
 ('Shipping', 500000);
 
 INSERT INTO TrainingProgram
-(StartDate,EndDate,MaxAttendees)
+(Name, StartDate,EndDate,MaxAttendees)
 Values
-('12-15-2018','12-20-2018', 25);
+('Cool Name','12-15-2018','12-20-2018', 25);
 
 INSERT INTO TrainingProgram
-(StartDate,EndDate,MaxAttendees)
+(Name, StartDate,EndDate,MaxAttendees)
 Values
-('09-15-2018','09-20-2018', 25);
+('Best Name', '09-15-2018', '09-20-2018', 25);
 
 INSERT INTO TrainingProgram
-(StartDate,EndDate,MaxAttendees)
+(Name, StartDate,EndDate,MaxAttendees)
 Values
-('11-15-2018','11-20-2018', 25);
+('Worst Name', '11-15-2018','11-20-2018', 25);
 
 INSERT INTO TrainingProgram
-(StartDate,EndDate,MaxAttendees)
+(Name, StartDate,EndDate,MaxAttendees)
 Values
-('1-15-2019','1-20-2019', 25);
+('Eff You', '1-15-2019','1-20-2019', 25);
 
 INSERT INTO Computer
-	(PurchaseDate, DecomissionDate)
-	VALUES ('2018-06-12 10:34:09 PM', NULL)
+	(PurchaseDate, DecomissionDate, Make, Manufacturer)
+	VALUES ('2016-2-23 10:34:09 PM', '2018-12-3 12:42:09 PM', 'Apple', 'MacBook Pro')
 ;
 
 INSERT INTO Computer
-	(PurchaseDate, DecomissionDate)
-	VALUES ('2018-09-30 10:34:09 PM', NULL)
-;
-
-INSERT INTO Computer
-	(PurchaseDate, DecomissionDate)
-	VALUES ('2016-2-23 10:34:09 PM', '2018-12-3 12:42:09 PM')
-;
-
-INSERT INTO Computer
-	(PurchaseDate, DecomissionDate)
-	VALUES ('2015-12-2 10:34:09 PM', '2017-3-23 09:03:09 PM')
+	(PurchaseDate, DecomissionDate, Make, Manufacturer)
+	VALUES ('2015-12-2 10:34:09 PM', '2017-3-23 09:03:09 PM', 'Dell', 'Cool Comp')
 ;
 
 INSERT INTO Employee 
 	(FirstName, LastName, DepartmentId, IsSuperVisor)
-	VALUES ('FirstName1', 'LastName1', 1, 0)
+	VALUES ('Jeff', 'Santos', 29, 0)
 ;
 
 INSERT INTO Employee 
 	(FirstName, LastName, DepartmentId, IsSuperVisor)
-	VALUES ('FirstName2', 'LastName2', 2, 0)
+	VALUES ('FirstName2', 'LastName2', 9, 0)
 ;
 
 INSERT INTO Employee 
 	(FirstName, LastName, DepartmentId, IsSuperVisor)
-	VALUES ('FirstName3', 'LastName3', 3, 1)
-;
-
-INSERT INTO Employee 
-	(FirstName, LastName, DepartmentId, IsSuperVisor)
-	VALUES ('FirstName4', 'LastName4', 4, 1)
+	VALUES ('FirstName3', 'LastName3', 29, 1)
 ;
 
 INSERT INTO ComputerEmployee
 	(EmployeeId, ComputerId, AssignDate, UnassignDate)
-	VALUES (1, 1, '2015-12-2 10:34:09 PM', '2018-2-23 01:34:09 PM')
+	VALUES (26, 17, '2015-12-2 10:34:09 PM', '2018-2-23 01:34:09 PM')
 ;
 
 INSERT INTO ComputerEmployee
 	(EmployeeId, ComputerId, AssignDate, UnassignDate)
-	VALUES (2, 2, '2017-12-2 04:34:09 AM', '2018-12-3 01:34:09 PM')
+	VALUES (9, 10, '2017-12-2 04:34:09 AM', '2018-12-3 01:34:09 PM')
 ;
 
 INSERT INTO ComputerEmployee
 	(EmployeeId, ComputerId, AssignDate, UnassignDate)
-	VALUES (3, 3, '2016-11-2 09:23:09 PM', NULL)
+	VALUES (11, 11, '2016-11-2 09:23:09 PM', NULL)
 ;
 
 INSERT INTO ComputerEmployee
 	(EmployeeId, ComputerId, AssignDate, UnassignDate)
-	VALUES (4, 4, '2012-10-2 07:12:23 PM', NULL)
-;
-
-INSERT INTO [Order]
-	(CustomerId, PaymentTypeId)
-	VALUES (1, 1)
-;
-
-INSERT INTO [Order]
-	(CustomerId, PaymentTypeId)
-	VALUES (2, 2)
-;
-
-INSERT INTO [Order]
-	(CustomerId, PaymentTypeId)
-	VALUES (3, 3)
-;
-
-INSERT INTO [Order]
-	(CustomerId, PaymentTypeId)
-	VALUES (4, 4)
-;
-
-INSERT INTO OrderProduct
-	(OrderId, ProductId)
-	VALUES (1, 1)
-;
-
-INSERT INTO OrderProduct
-	(OrderId, ProductId)
-	VALUES (2, 2)
-;
-
-INSERT INTO OrderProduct
-	(OrderId, ProductId)
-	VALUES (3, 3)
-;
-
-INSERT INTO OrderProduct
-	(OrderId, ProductId)
-	VALUES (4, 4)
+	VALUES (11, 4, '2012-10-2 07:12:23 PM', NULL)
 ;
 
 INSERT INTO EmployeeTraining
 (EmployeeId, TrainingProgramId)
-VALUES(1, 1);
-
-INSERT INTO EmployeeTraining
-(EmployeeId, TrainingProgramId)
-VALUES(3, 2);
-
-INSERT INTO EmployeeTraining
-(EmployeeId, TrainingProgramId)
-VALUES(4, 3);
-
-INSERT INTO EmployeeTraining
-(EmployeeId, TrainingProgramId)
-VALUES(2, 4);
+VALUES(26, 26)
+;

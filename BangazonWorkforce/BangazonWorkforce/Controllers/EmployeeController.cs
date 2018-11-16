@@ -190,9 +190,9 @@ namespace BangazonWorkforce.Controllers
                                        DepartmentId = {employee.DepartmentId}
                                  WHERE id = {id}
                                  
-                                INSERT INTO ComputerEmployee 
+                                 INSERT INTO ComputerEmployee 
                                     (EmployeeId, ComputerId, AssignDate) 
-                                VALUES ({id}, {viewmodel.Employee.Computer.Id}, {DateTime.Now})";
+                                 VALUES ({id}, {viewmodel.Employee.Computer.Id}, {DateTime.Now})";
 
                 await conn.ExecuteAsync(sql);
                 return RedirectToAction("Index");
@@ -285,6 +285,18 @@ namespace BangazonWorkforce.Controllers
                 IEnumerable<Computer> computers = await conn.QueryAsync<Computer>(sql);
                 return computers.ToList();
             }
+        }
+
+        private async Task<EmployeeAddEditViewModel> AssignComputer()
+        {
+            using (IDbConnection conn = Connection)
+            {
+                string sql = $@"INSERT INTO ComputerEmployee 
+                                    (EmployeeId, ComputerId, AssignDate) 
+                                VALUES ({id}, {viewmodel.Employee.Computer.Id}, {DateTime.Now})";
+                await conn.ExecuteAsync(sql);
+            }
+
         }
     }
 }

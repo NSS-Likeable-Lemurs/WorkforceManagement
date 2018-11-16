@@ -52,14 +52,27 @@ namespace BangazonWorkforce.Controllers
                          FROM Department d 
                 LEFT JOIN Employee e on d.Id = e.DepartmentId
                     WHERE d.Id = {id}";
-            Department department = await GetById(id.Value);
-            if (department == null)
-            {
-                return NotFound();
-            }
-            return View(department);
-        }
 
+            using (IDbConnection conn = Connection)
+            {
+
+                Department dept = new Department();
+                IEnumerable<Department> deptquery = await conn.QueryAsync<Department, Employee, Department>(sql,
+                   (department, employee) =>
+                   {
+
+                       dept.Id = department.Id;
+                       dept.Name = department.Name;
+
+
+                       dept.Employees.Add(employee);
+                       return department;
+                   },splitOn: "EmployeeId,DepartmentId"
+                   );
+
+                return View(dept);
+            }
+        }
 
 
 

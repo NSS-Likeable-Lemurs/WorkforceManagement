@@ -1,4 +1,3 @@
-
 DELETE FROM OrderProduct;
 DELETE FROM ComputerEmployee;
 DELETE FROM EmployeeTraining;
@@ -59,7 +58,9 @@ CREATE TABLE Employee (
 CREATE TABLE Computer (
 	Id INTEGER NOT NULL PRIMARY KEY IDENTITY,
 	PurchaseDate DATETIME NOT NULL,
-	DecomissionDate DATETIME
+	DecomissionDate DATETIME,
+	Make VARCHAR(55) NOT NULL,
+	Manufacturer VARCHAR(55) NOT NULL
 );
 
 CREATE TABLE ComputerEmployee (
@@ -75,6 +76,7 @@ CREATE TABLE ComputerEmployee (
 
 CREATE TABLE TrainingProgram (
 	Id INTEGER NOT NULL PRIMARY KEY IDENTITY,
+	Name VARCHAR(55) NOT NULL,
 	StartDate DATETIME NOT NULL,
 	EndDate DATETIME NOT NULL,
 	MaxAttendees INTEGER NOT NULL
@@ -136,4 +138,116 @@ CREATE TABLE OrderProduct (
     CONSTRAINT FK_OrderProduct_Order FOREIGN KEY(OrderId) REFERENCES [Order](Id)
 );
 
+INSERT INTO PaymentType
+    (AcctNumber, Name, CustomerId)
+VALUES
+    (846724, 'Visa', 1)
+;
 
+INSERT INTO PaymentType
+    (AcctNumber, Name, CustomerId)
+VALUES
+    (915387, 'MasterCard', 2)
+;
+
+INSERT INTO PaymentType
+    (AcctNumber, Name, CustomerId)
+VALUES
+    (017338, 'MasterCard', 3)
+;
+
+INSERT INTO PaymentType
+    (AcctNumber, Name, CustomerId)
+VALUES
+    (156483, 'Discover', 4)
+;
+
+INSERT INTO Department
+(Name, Budget)
+VALUES
+('Accounting', 300000);
+
+INSERT INTO Department
+(Name, Budget)
+VALUES
+('CustomerService', 250000);
+
+INSERT INTO Department
+(Name, Budget)
+VALUES
+('Training', 125000);
+
+INSERT INTO Department
+(Name, Budget)
+VALUES
+('Shipping', 500000);
+
+INSERT INTO TrainingProgram
+(Name, StartDate,EndDate,MaxAttendees)
+Values
+('Cool Name','12-15-2018','12-20-2018', 25);
+
+INSERT INTO TrainingProgram
+(Name, StartDate,EndDate,MaxAttendees)
+Values
+('Best Name', '09-15-2018', '09-20-2018', 25);
+
+INSERT INTO TrainingProgram
+(Name, StartDate,EndDate,MaxAttendees)
+Values
+('Worst Name', '11-15-2018','11-20-2018', 25);
+
+INSERT INTO TrainingProgram
+(Name, StartDate,EndDate,MaxAttendees)
+Values
+('Eff You', '1-15-2019','1-20-2019', 25);
+
+INSERT INTO Computer
+	(PurchaseDate, DecomissionDate, Make, Manufacturer)
+	VALUES ('2016-2-23 10:34:09 PM', '2018-12-3 12:42:09 PM', 'Apple', 'MacBook Pro')
+;
+
+INSERT INTO Computer
+	(PurchaseDate, DecomissionDate, Make, Manufacturer)
+	VALUES ('2015-12-2 10:34:09 PM', '2017-3-23 09:03:09 PM', 'Dell', 'Cool Comp')
+;
+
+INSERT INTO Employee 
+	(FirstName, LastName, DepartmentId, IsSuperVisor)
+	VALUES ('Jeff', 'Santos', 29, 0)
+;
+
+INSERT INTO Employee 
+	(FirstName, LastName, DepartmentId, IsSuperVisor)
+	VALUES ('FirstName2', 'LastName2', 9, 0)
+;
+
+INSERT INTO Employee 
+	(FirstName, LastName, DepartmentId, IsSuperVisor)
+	VALUES ('FirstName3', 'LastName3', 29, 1)
+;
+
+INSERT INTO ComputerEmployee
+	(EmployeeId, ComputerId, AssignDate, UnassignDate)
+	VALUES (26, 17, '2015-12-2 10:34:09 PM', '2018-2-23 01:34:09 PM')
+;
+
+INSERT INTO ComputerEmployee
+	(EmployeeId, ComputerId, AssignDate, UnassignDate)
+	VALUES (9, 10, '2017-12-2 04:34:09 AM', '2018-12-3 01:34:09 PM')
+;
+
+INSERT INTO ComputerEmployee
+	(EmployeeId, ComputerId, AssignDate, UnassignDate)
+	VALUES (11, 11, '2016-11-2 09:23:09 PM', NULL)
+;
+
+INSERT INTO ComputerEmployee
+	(EmployeeId, ComputerId, AssignDate, UnassignDate)
+	VALUES (11, 4, '2012-10-2 07:12:23 PM', NULL)
+;
+
+INSERT INTO EmployeeTraining
+(EmployeeId, TrainingProgramId)
+VALUES(26, 26)
+;

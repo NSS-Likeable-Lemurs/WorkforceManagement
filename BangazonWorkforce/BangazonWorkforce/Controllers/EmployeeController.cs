@@ -75,6 +75,9 @@ namespace BangazonWorkforce.Controllers
                  with department name.
        *Author: Kelly Cook
        *Method: EmployeeDetail([FromRoute]int id) - When a user on Employee page clicks on any Detail hyperlinked Employee then page load the detail of that Employee",
+       * * Method:
+           Get() - Returns all user detail from the Employee table in the database. Will also display if said employee has a computer assigned to them and if they
+           are enrolled in any training programs.
     */
         public async Task<IActionResult> Details(int? id)
         {

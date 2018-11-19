@@ -186,20 +186,41 @@ namespace BangazonWorkforce.Controllers
 
             using (IDbConnection conn = Connection)
             {
+                ComputerEmployee checkAssignedComputer = (await conn.QueryAsync<Employee, ComputerEmployee, Computer, ComputerEmployee>($@"
+                                        select e.Id, e.FirstName,
+		                                        e.LastName,
+                                                ce.Id,
+		                                        ce.UnassignDate,
+                                                c.Id,
+		                                        c.Make,
+		                                        c.Manufacturer
+                                        from Employee e
+                                        join ComputerEmployee ce on e.Id = ce.EmployeeId
+                                        join Computer c on ce.ComputerId = c.Id
+                                        where e.Id = {id} 
+                                        and ce.UnassignDate is null
+                                        ;",
+                                        (e,ce,c) => { 
+                                            
+                                            return ce;
+                                         })).ToList().First();
+                if (checkAssignedComputer != null)
+                {
+                    string unassignComputerSql = $@"UPDATE ComputerEmployee
+                                                   SET UnassignDate = '{DateTime.Now}'
+                                                WHERE id = {checkAssignedComputer.Id}";
+                }
+
                 string sql = $@"UPDATE Employee 
                                    SET LastName = '{employee.LastName}', 
                                        DepartmentId = {employee.DepartmentId}
                                  WHERE id = {id};";
-
-                string unassignComputerSql = $@"UPDATE ComputerEmployee
-                                                   SET UnassignDate = '{DateTime.Now}'
-                                                WHERE id = {id}";
-
+                
                 string assignComputerSql = $@"INSERT INTO ComputerEmployee 
                                    (EmployeeId, ComputerId, AssignDate) 
                                  VALUES ({id}, {viewmodel.Employee.Computer.Id}, '{DateTime.Now}');";
 
-                sql = sql + assignComputerSql + unassignComputerSql;
+                sql = sql + assignComputerSql;
                 await conn.ExecuteAsync(sql);
                 return RedirectToAction("Index");
             }

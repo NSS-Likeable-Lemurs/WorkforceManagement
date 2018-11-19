@@ -21,9 +21,6 @@
     <Content Update="Views\Computer\Details.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Computer\Edit.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Views\Computer\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

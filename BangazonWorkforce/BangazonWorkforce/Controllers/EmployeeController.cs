@@ -133,8 +133,11 @@ namespace BangazonWorkforce.Controllers
                             model.FirstName = emp.FirstName;
                             model.LastName = emp.LastName;
                             model.DepartmentName = department.Name;
-                            model.ComputerMake = computer.Make;
+                        }
+                        if (computer != null)
+                        {
                             model.ComputerManufacturer = computer.Manufacturer;
+                            model.ComputerMake = computer.Make;
                         }
 
                         if (!model.TrainingPrograms.Contains(trainingProgram))

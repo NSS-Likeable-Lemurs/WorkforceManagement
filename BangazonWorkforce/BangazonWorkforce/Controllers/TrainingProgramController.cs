@@ -24,6 +24,7 @@ namespace BangazonWorkforce.Controllers
 */
 {
     public class TrainingProgramController : Controller
+
     {
         private IConfiguration _config;
         private IDbConnection Connection

@@ -70,15 +70,7 @@ namespace BangazonWorkforce.IntegrationTests
             Assert.Contains(
                 indexPage.QuerySelectorAll("td"),
                 td => td.TextContent.Contains(newTPName));
-            Assert.Contains(
-                indexPage.QuerySelectorAll("td"),
-                td => td.TextContent.Contains(newTPStartDate));
-            Assert.Contains(
-                indexPage.QuerySelectorAll("td"),
-                td => td.TextContent.Contains(newTPEndDate));
-            Assert.Contains(
-                indexPage.QuerySelectorAll("td"),
-                td => td.TextContent.Contains(newTPMaxAttend));
+            
         }
     }
 }

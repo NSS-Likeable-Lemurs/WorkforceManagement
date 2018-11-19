@@ -66,6 +66,7 @@ namespace BangazonWorkforce.Controllers
                                  LEFT JOIN Department d on e.DepartmentId = d.Id
                                  LEFT JOIN ComputerEmployee ce on e.Id = ce.EmployeeId
                                  LEFT JOIN Computer c on ce.ComputerId = c.ID
+                             WHERE UnassignDate IS NULL
                              ORDER BY e.Id";
                 IEnumerable<Employee> employees = await conn.QueryAsync<Employee, Department, Computer, Employee>(
                     sql,
@@ -188,12 +189,17 @@ namespace BangazonWorkforce.Controllers
                 string sql = $@"UPDATE Employee 
                                    SET LastName = '{employee.LastName}', 
                                        DepartmentId = {employee.DepartmentId}
-                                 WHERE id = {id}
-                                 
-                                 INSERT INTO ComputerEmployee 
-                                    (EmployeeId, ComputerId, AssignDate) 
-                                 VALUES ({id}, {viewmodel.Employee.Computer.Id}, {DateTime.Now})";
+                                 WHERE id = {id};";
 
+                string unassignComputerSql = $@"UPDATE ComputerEmployee
+                                                   SET UnassignDate = '{DateTime.Now}'
+                                                WHERE id = {id}";
+
+                string assignComputerSql = $@"INSERT INTO ComputerEmployee 
+                                   (EmployeeId, ComputerId, AssignDate) 
+                                 VALUES ({id}, {viewmodel.Employee.Computer.Id}, '{DateTime.Now}');";
+
+                sql = sql + assignComputerSql + unassignComputerSql;
                 await conn.ExecuteAsync(sql);
                 return RedirectToAction("Index");
             }
@@ -279,24 +285,12 @@ namespace BangazonWorkforce.Controllers
                                        c.Manufacturer 
                                FROM Computer c 
                                LEFT JOIN ComputerEmployee ce on ce.ComputerId = c.Id
-                               WHERE ce.Id IS NULL";
-                               
+                               WHERE ce.Id IS NULL
+                               AND DecomissionDate IS NULL";
 
                 IEnumerable<Computer> computers = await conn.QueryAsync<Computer>(sql);
                 return computers.ToList();
             }
-        }
-
-        private async Task<EmployeeAddEditViewModel> AssignComputer()
-        {
-            using (IDbConnection conn = Connection)
-            {
-                string sql = $@"INSERT INTO ComputerEmployee 
-                                    (EmployeeId, ComputerId, AssignDate) 
-                                VALUES ({id}, {viewmodel.Employee.Computer.Id}, {DateTime.Now})";
-                await conn.ExecuteAsync(sql);
-            }
-
         }
     }
 }

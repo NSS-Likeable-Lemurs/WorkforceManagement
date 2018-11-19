@@ -12,10 +12,13 @@ using System.Threading.Tasks;
 using Xunit;
 using Dapper;
 using AngleSharp.Dom;
+using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace BangazonWorkforce.IntegrationTests
 {
     public class EmployeeTests :
+
         IClassFixture<WebApplicationFactory<BangazonWorkforce.Startup>>
     {
         private readonly HttpClient _client;
@@ -182,10 +185,34 @@ namespace BangazonWorkforce.IntegrationTests
         {
             using (IDbConnection conn = new SqlConnection(Config.ConnectionSring))
             {
-                IEnumerable<Department> allDepartments = 
+                IEnumerable<Department> allDepartments =
                     await conn.QueryAsync<Department>(@"SELECT Id, Name, Budget FROM Department");
                 return allDepartments.ToList();
             }
         }
-   }
+
+        [Fact]
+        public async Task GetAllEmployeeDetails()
+        {
+            // Arange
+            string url = "/employee/details/26";
+
+            // Act
+            HttpResponseMessage response = await _client.GetAsync(url);
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            Assert.Equal("text/html; charset=utf-8",
+                response.Content.Headers.ContentType.ToString());
+
+            IHtmlDocument detailPage = await HtmlHelpers.GetDocumentAsync(response);
+            IHtmlCollection<IElement> dds = detailPage.QuerySelectorAll("dd");
+            Assert.Contains(dds, dd => dd.TextContent.Trim() == "Jeff");
+            Assert.Contains(dds, dd => dd.TextContent.Trim() == "Santos");
+            Assert.Contains(dds, dd => dd.TextContent.Trim() == "Accounting");
+            Assert.Contains(dds, dd => dd.TextContent.Trim() == "Dell");
+            Assert.Contains(dds, dd => dd.TextContent.Trim() == "Cool Comp");
+            Assert.Contains(dds, dd => dd.TextContent.Trim() == "Eff You");
+        }
+    }
 }

@@ -84,6 +84,7 @@ namespace BangazonWorkforce.Controllers
             }
             using (IDbConnection conn = Connection)
             {
+                /* SQL statement to grab all related data from the database. Joining Employees, Computers, and Training Programs. */
 
                 Employee employee = await GetById(id.Value);
                 if (employee == null)

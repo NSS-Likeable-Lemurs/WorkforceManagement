@@ -75,12 +75,12 @@ namespace BangazonWorkforce.IntegrationTests
 
 
         // Author: Priyanka Garg
-        // Purpose: Integration Testing for getting the Details of Departments with their Employees .
+        // Purpose: Integration Testing for getting the Details of Departments with their Employees.
         [Fact]
         public async Task Detail_GetAllDepartmentDeatil()
         {
             // Arrange
-            string url = "/department/Details/1";
+            string url = "/department/Details/1003";
 
 
             // Act
@@ -96,7 +96,7 @@ namespace BangazonWorkforce.IntegrationTests
             Assert.Contains(tds, td => td.TextContent.Trim() == "FirstName1");
             Assert.Contains(tds, td => td.TextContent.Trim() == "LastName1");
             IHtmlCollection<IElement> dds = indexPage.QuerySelectorAll("dd");
-            Assert.Contains(dds, dd => dd.TextContent.Trim() == "IT");
+            Assert.Contains(dds, dd => dd.TextContent.Trim() == "Accounting");
 
 
         }

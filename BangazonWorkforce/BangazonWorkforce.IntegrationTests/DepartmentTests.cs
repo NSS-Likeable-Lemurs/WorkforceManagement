@@ -80,7 +80,7 @@ namespace BangazonWorkforce.IntegrationTests
         public async Task Detail_GetAllDepartmentDeatil()
         {
             // Arrange
-            string url = "/department/Details/1003";
+            string url = "/department/Details/1";
 
 
             // Act

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BangazonWorkforce.Controllers
 {
     public class TrainingProgramController : Controller
+
     {
         // GET: TrainingProgram
         public ActionResult Index()

@@ -91,30 +91,30 @@ namespace BangazonWorkforce.Controllers
                     return NotFound();
                 }
                 string sql = $@"SELECT 
-                                e.Id, 
-                                e.FirstName,
-                                e.LastName, 
-                                e.IsSupervisor,
-                                e.DepartmentId,
-                                d.Id,
-                                d.[Name],
-                                d.Budget,
-                                c.Id,
-                                c.PurchaseDate,
-                                c.DecomissionDate,
-                                c.Make,
-                                c.Manufacturer,
-                                tp.Id,
-                                tp.[Name],
-                                tp.StartDate,
-                                tp.EndDate,
-                                tp.MaxAttendees
+                                    e.Id, 
+                                    e.FirstName,
+                                    e.LastName, 
+                                    e.IsSupervisor,
+                                    e.DepartmentId,
+                                    d.Id,
+                                    d.Name,
+                                    d.Budget,
+                                    c.Id,
+                                    c.PurchaseDate,
+                                    c.DecomissionDate,
+                                    c.Make,
+                                    c.Manufacturer,
+                                    tp.Id,
+                                    tp.Name,
+                                    tp.StartDate,
+                                    tp.EndDate,
+                                    tp.MaxAttendees
                                 FROM Employee e 
-                                JOIN ComputerEmployee on ComputerEmployee.EmployeeId = e.Id
-                                JOIN Computer c on c.Id = ComputerEmployee.ComputerId
-                                LEFT JOIN EmployeeTraining on EmployeeTraining.EmployeeId = e.Id
-                                LEFT JOIN TrainingProgram tp on tp.Id = EmployeeTraining.TrainingProgramId
-                                LEFT JOIN Department d on d.Id = e.DepartmentId
+                                    JOIN ComputerEmployee on ComputerEmployee.EmployeeId = e.Id
+                                    JOIN Computer c on c.Id = ComputerEmployee.ComputerId
+                                    LEFT JOIN EmployeeTraining on EmployeeTraining.EmployeeId = e.Id
+                                    LEFT JOIN TrainingProgram tp on tp.Id = EmployeeTraining.TrainingProgramId
+                                    LEFT JOIN Department d on d.Id = e.DepartmentId
                                 WHERE e.Id = {id}";
 
                 EmployeeDetailViewModel model = new EmployeeDetailViewModel();

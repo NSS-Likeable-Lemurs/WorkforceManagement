@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using BangazonWorkforce.Models;
+using BangazonWorkforce.Models.ViewModels;
 
 namespace BangazonWorkforce.Controllers
 
@@ -48,30 +49,58 @@ Get() - Returns all Departments from the Department table in the database.
         {
             using (IDbConnection conn = Connection)
             {
-                string sql = $@"SELECT  d.Name, d.Budget, COUNT(e.DepartmentId) TotalEmployees 
+                string sql = $@"SELECT d.Id,d.Name, d.Budget, COUNT(e.DepartmentId) TotalEmployees 
                                 FROM Department d 
                                 LEFT JOIN Employee e on d.Id = e.DepartmentId 
-                                GROUP BY d.Name, d.Budget;";               
+                                GROUP BY d.Id,d.Name, d.Budget;";               
                     IEnumerable<Department> departments = await conn.QueryAsync<Department>(sql);
 
                 return View(departments);
             }
         }
 
-        public async Task<IActionResult> Details(int? id) 
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        /**
+       *Purpose: Define Detail method that interract with the Department table to show detail of Department
+                 with the employees assign to that department.
+       *Author: Priynaka Garg
+       *Method: DepartmentDetail([FromRoute]int id) - When a user on Department page clicks on any Detail hyperlinked Department then page load the detail of that Department",
+    */
 
-            Department department = await GetById(id.Value);
-            if (department == null)
+        public async Task<IActionResult> Details(int id) 
+        {
+           
+            string sql = $@"SELECT d.Id, 
+                             d.Name,  
+                             e.Id,
+                           e.FirstName, 
+                           e.LastName,
+                           e.DepartmentId
+                         FROM Department d 
+                LEFT JOIN Employee e on d.Id = e.DepartmentId
+                    WHERE d.Id = {id}";
+
+            using (IDbConnection conn = Connection)
             {
-                return NotFound();
+
+              DepartmentDetailViewModel dept = new DepartmentDetailViewModel();
+                IEnumerable<Department> deptquery = await conn.QueryAsync<Department, Employee, Department>(sql,
+                   (department, employee) =>
+                   {
+
+                       dept.Id = department.Id;
+                       dept.Name = department.Name;
+
+
+                       dept.Employees.Add(employee);
+                       return department;
+                   }
+                   );
+
+                return View(dept);
             }
-            return View(department);
         }
+
+
 
         // GET: Department/Create
         public IActionResult Create()

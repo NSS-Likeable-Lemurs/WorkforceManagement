@@ -46,8 +46,8 @@ namespace BangazonWorkforce.IntegrationTests
             IHtmlDocument createPage = await HtmlHelpers.GetDocumentAsync(createPageResponse);
 
             string newTPName = "TP25";
-            string newTPStartDate = "2020-01-23";
-            string newTPEndDate = "2020-02-23";
+            string newTPStartDate = "01-25-2020 02:30 PM";
+            string newTPEndDate = "02-25-2020 02:45 PM";
             string newTPMaxAttend = "25";
 
 

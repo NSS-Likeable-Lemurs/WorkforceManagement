@@ -36,7 +36,6 @@ namespace BangazonWorkforce.IntegrationTests
             // Act
             HttpResponseMessage response = await _client.GetAsync(url);
 
-
             // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             Assert.Equal("text/html; charset=utf-8",
@@ -47,10 +46,49 @@ namespace BangazonWorkforce.IntegrationTests
             Assert.Contains(tds, td => td.TextContent.Trim() == "Mac");
             Assert.Contains(tds, td => td.TextContent.Trim() == "Apple");
             Assert.Contains(tds, td => td.TextContent.Trim() == "9/30/2018 10:34:09 PM");
-
-
         }
 
+        [Fact]
+        public async Task Post_CreateAddsComputer()
+        {
+            // Arrange
+            string url = "/computer/create";
+            HttpResponseMessage createPageResponse = await _client.GetAsync(url);
+            IHtmlDocument createPage = await HtmlHelpers.GetDocumentAsync(createPageResponse);
+
+            string newMake = StringHelpers.EnsureMaxLength("Make-" + Guid.NewGuid().ToString(), 55);
+            string newManufacturer = StringHelpers.EnsureMaxLength("Manufacturer-" + Guid.NewGuid().ToString(), 55);
+            string newPurchaseDate = DateTime.Now.ToString();
+
+
+
+            // Act
+            HttpResponseMessage response = await _client.SendAsync(
+                createPage,
+                new Dictionary<string, string>
+                {
+                    {"Make", newMake},
+                    {"Manufacturer", newManufacturer},
+                    {"PurchaseDate", newPurchaseDate}
+                });
+
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+
+            IHtmlDocument indexPage = await HtmlHelpers.GetDocumentAsync(response);
+            var lastRow = indexPage.QuerySelector("tbody tr:last-child");
+
+            Assert.Contains(
+                lastRow.QuerySelectorAll("td"),
+                td => td.TextContent.Contains(newMake));
+            Assert.Contains(
+                lastRow.QuerySelectorAll("td"),
+                td => td.TextContent.Contains(newManufacturer));
+            Assert.Contains(
+                lastRow.QuerySelectorAll("td"),
+                td => td.TextContent.Contains(newPurchaseDate));
+        }
 
 
 

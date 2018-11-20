@@ -173,7 +173,7 @@ namespace BangazonWorkforce.Controllers
             {
                 if (ComputerHasBeenAssigned(id))
                 {
-                    return View("DenyDelete");
+                    return View("NoDelete");
                 }
                 else
                 {
